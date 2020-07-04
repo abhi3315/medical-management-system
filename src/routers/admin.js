@@ -39,8 +39,11 @@ router.post('/admin/addBranch', adminAuth, async (req, res) => {
     }
 })
 
-router.post('/admin/addStaff', async (req, res) => {
-    const staff = new Staff(req.body)
+router.post('/admin/addStaff', adminAuth, async (req, res) => {
+    const staff = new Staff({
+        ...req.body,
+        addedBy: req.admin._id
+    })
     try {
         await staff.save()
         res.status(201).send(staff)

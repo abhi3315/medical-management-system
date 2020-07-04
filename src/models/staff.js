@@ -41,7 +41,7 @@ const staffSchema = new mongoose.Schema({
         required: true,
         trim: true,
         validate(value) {
-            if (!value.isMobilePhone(value, ['en-IN'], { strictMode: false }))
+            if (!validator.isMobilePhone(value, ['en-IN'], { strictMode: false }))
                 throw new Error('Provide a valid phone number')
         }
     },
@@ -49,8 +49,19 @@ const staffSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Branch'
+    },
+    addedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Admin'
     }
 })
+
+staffSchema.methods.toJSON = function () {
+    const staffSchema = this.toObject()
+    delete staffSchema.password
+    return staffSchema
+}
 
 staffSchema.pre('save', async function (next) {
     if (this.isModified('password'))
