@@ -13,6 +13,11 @@ const branchSchema = new mongoose.Schema({
             if (value < 0)
                 throw new Error('Discount must be positive!')
         }
+    },
+    addedBy:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Admin'
     }
 })
 
