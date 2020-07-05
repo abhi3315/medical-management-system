@@ -5,11 +5,25 @@ const Staff = require('../models/staff')
 const adminAuth = require('../middleware/adminAuth')
 const router = express.Router()
 
+router.get('/admin', adminAuth,(req, res) => {
+    res.render('admin/home')
+})
+
+router.get('/admin/staff', adminAuth, async (req, res) => {
+    try {
+        const branches = await Branch.find({})
+        res.send(branches)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 router.post('/admin/signup', async (req, res) => {
     const admin = new Admin(req.body)
     try {
         await admin.save()
         const token = await admin.generateAuthToken()
+        res.cookie("adminAuthorization", token)
         res.status(201).send({ admin, token })
     } catch (e) {
         res.status(400).send(e)
@@ -20,7 +34,8 @@ router.post('/admin/login', async (req, res) => {
     try {
         const admin = await Admin.findByCredentials(req.body.email, req.body.password)
         const token = await admin.generateAuthToken()
-        res.send({ admin, token })
+        res.cookie("adminAuthorization", token)
+        res.redirect('/admin')
     } catch (e) {
         res.status(400).send()
     }
@@ -54,7 +69,7 @@ router.post('/admin/staff', adminAuth, async (req, res) => {
 
 router.patch('/admin/branch', adminAuth, async (req, res) => {
     const updates = Object.keys(req.body)
-    const validUpdates = ['discount','name']
+    const validUpdates = ['discount', 'name']
     const isValidUpdate = updates.every(update => validUpdates.includes(update))
 
     if (!isValidUpdate) return res.status(400).send({ error: "Invalid Update!" })
@@ -88,7 +103,7 @@ router.patch('/admin/staff', adminAuth, async (req, res) => {
     }
 })
 
-router.delete('admin/branch', adminAuth, async (req, res) => {
+router.delete('/admin/branch', adminAuth, async (req, res) => {
     try {
         const branch = await Branch.findOne({ name: req.body.name })
         if (!branch) return res.status(404).send()
@@ -99,21 +114,12 @@ router.delete('admin/branch', adminAuth, async (req, res) => {
     }
 })
 
-router.delete('admin/staff', adminAuth, async (req, res) => {
+router.delete('/admin/staff', adminAuth, async (req, res) => {
     try {
         const staff = await Staff.findOne({ userName: req.body.userName })
         if (!staff) return res.status(404).send()
         await staff.remove()
         res.send(branch)
-    } catch (e) {
-        res.status(500).send()
-    }
-})
-
-router.get('admin/staff', adminAuth, async (req, res) => {
-    try {
-        const branches = await Branch.find({})
-        res.send(branches)
     } catch (e) {
         res.status(500).send()
     }

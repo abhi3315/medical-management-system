@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+body {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 102, 255, 0.7)), url('/images/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.login-cards {
+    margin-top: 200px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.login-card {
+    width: 200px;
+    height: 250px;
+    background-color: rgb(145, 145, 145, 0.8);
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+    transition: 0.3s;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.login-card i {
+    font-size: 100px;
+    color: rgb(61, 61, 61);
+    transition: 0.3s;
+}
+
+.login-card h3 {
+    margin-top: 50px;
+    color: rgb(61, 61, 61)
+}
+
+.login-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6), -2px -2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.login-card:hover i {
+    font-size: 150px;
+}
+
+.login-form {
+    width: 400px;
+    height: 350px;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 40%);
+    border-radius: 3px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);
+    padding: 20px;
+}
+
+.login-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form form h2 {
+    color: white;
+}
+
+.login-form form input {
+    width: 60%;
+    height: 45px;
+    background: transparent;
+    border: 2px solid rgb(4, 150, 4);
+    margin-top: 35px;
+    border-radius: 30px;
+    transition: 0.3s;
+    color: white;
+    text-align: center;
+}
+
+.login-form form input::placeholder {
+    text-align: center;
+}
+
+.login-form form input:focus {
+    width: 80%;
+    border: 2px solid blueviolet;
+}
+
+.login-form form button {
+    width: 60%;
+    margin-top: 35px;
+    background: rgb(4, 150, 4);
+    height: 45px;
+    letter-spacing: 2px;
+    font-size: 15px;
+    border-radius: 30px;
+    border: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.login-form form button:hover {
+    background: blueviolet;
+    color: white;
+}
+
+@media only screen and (max-width: 750px) {
+    .login-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-card {
+        margin-top: 50px;
+    }
+}

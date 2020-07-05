@@ -3,7 +3,7 @@ const Admin = require('../models/admin')
 
 const auth = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '')
+        const token = req.cookies.adminAuthorization || req.header('Authorization').replace('Bearer ', '')
         const decode = jwt.verify(token, 'myTokenString@123')
         const admin = await Admin.findOne({ _id: decode._id, 'tokens.token': token })
 
@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
 
         next()
     } catch (e) {
-        res.status(401).send({ error: 'Please Authenticate' })
+        res.render('admin/index')
     }
 }
 

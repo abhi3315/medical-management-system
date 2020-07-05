@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 require('./db/mongoose')
+const cookieParser = require('cookie-parser')
 const hbs = require('hbs')
 const adminRoute = require('./routers/admin')
 
@@ -9,6 +10,7 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 //public folder setup
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -22,7 +24,9 @@ app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
 //routes setup
-
+app.get('/', (req, res) => {
+    res.render('index')
+})
 
 app.use(adminRoute)
 
