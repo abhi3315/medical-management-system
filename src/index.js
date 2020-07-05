@@ -22,6 +22,7 @@ const partialsPath = path.join(__dirname, '../templates/partials')
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
+hbs.registerHelper("inc", (value, options) => parseInt(value) + 1)
 
 //routes setup
 app.get('/', (req, res) => {

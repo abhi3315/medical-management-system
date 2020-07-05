@@ -2,17 +2,18 @@ const express = require('express')
 const Admin = require('../models/admin')
 const Branch = require('../models/branch')
 const Staff = require('../models/staff')
+const Doctor = require('../models/doctor')
 const adminAuth = require('../middleware/adminAuth')
 const router = express.Router()
 
-router.get('/admin', adminAuth,(req, res) => {
+router.get('/admin', adminAuth, (req, res) => {
     res.render('admin/home')
 })
 
-router.get('/admin/staff', adminAuth, async (req, res) => {
+router.get('/admin/branch', adminAuth, async (req, res) => {
     try {
         const branches = await Branch.find({})
-        res.send(branches)
+        res.render('admin/branch', { branches })
     } catch (e) {
         res.status(500).send()
     }
@@ -67,19 +68,23 @@ router.post('/admin/staff', adminAuth, async (req, res) => {
     }
 })
 
-router.patch('/admin/branch', adminAuth, async (req, res) => {
-    const updates = Object.keys(req.body)
-    const validUpdates = ['discount', 'name']
-    const isValidUpdate = updates.every(update => validUpdates.includes(update))
-
-    if (!isValidUpdate) return res.status(400).send({ error: "Invalid Update!" })
-
+router.post('/admin/doctor', adminAuth, async (req, res) => {
+    const doctor = new Doctor({
+        ...req.body,
+        addedBy: req.admin._id
+    })
     try {
-        const branch = await Branch.findOne({ name: req.body.name })
-        if (!branch) return res.status(404).send()
-        updates.forEach(update => branch[update] = req.body[update])
-        await branch.save()
-        res.send(branch)
+        await doctor.save()
+        res.status(201).send(doctor)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.post('/admin/branch/update', adminAuth, async (req, res) => {
+    try {
+        await Branch.findByIdAndUpdate({ _id: req.body._id }, req.body)
+        res.redirect('/admin/branch')
     } catch (e) {
         res.status(400).send(e)
     }
@@ -103,12 +108,28 @@ router.patch('/admin/staff', adminAuth, async (req, res) => {
     }
 })
 
-router.delete('/admin/branch', adminAuth, async (req, res) => {
+router.patch('/admin/doctor', adminAuth, async (req, res) => {
+    const updates = Object.keys(req.body)
+    const validUpdates = ['name', 'userName', 'email', 'password', 'phoneNumber', 'branch']
+    const isValidUpdate = updates.every(update => validUpdates.includes(update))
+
+    if (!isValidUpdate) return res.status(400).send({ error: "Invalid Update!" })
+
     try {
-        const branch = await Branch.findOne({ name: req.body.name })
-        if (!branch) return res.status(404).send()
-        await branch.remove()
-        res.send(branch)
+        const doctor = await Doctor.findOne({ userName: req.body.userName })
+        if (!doctor) return res.status(404).send()
+        updates.forEach(update => doctor[update] = req.body[update])
+        await doctor.save()
+        res.send(doctor)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.post('/admin/branch/delete', adminAuth, async (req, res) => {
+    try {
+        await Branch.findByIdAndDelete({ _id: req.body._id })
+        res.redirect('/admin/branch')
     } catch (e) {
         res.status(500).send()
     }
