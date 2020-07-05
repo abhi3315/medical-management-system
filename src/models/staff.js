@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const staffSchema = new mongoose.Schema({
     name: {
@@ -36,6 +37,12 @@ const staffSchema = new mongoose.Schema({
                 throw new Error('Provide a strong password!')
         }
     },
+    tokens: [{
+        token: {
+            type: String,
+            require: true
+        }
+    }],
     phoneNumber: {
         type: String,
         required: true,
@@ -61,6 +68,24 @@ staffSchema.methods.toJSON = function () {
     const staffSchema = this.toObject()
     delete staffSchema.password
     return staffSchema
+}
+
+staffSchema.methods.generateAuthToken = async function () {
+    const token = jwt.sign({ _id: this._id.toString() }, 'myTokenString@123')
+    this.tokens = this.tokens.concat({ token })
+    await this.save()
+
+    return token
+}
+
+staffSchema.statics.findByCredentials = async (userName, password) => {
+    const staff = await Staff.findOne({ userName })
+    if (!staff) throw new Error('No staff found with this username!')
+
+    const isMatch = await bcrypt.compare(password, staff.password)
+    if (!isMatch) throw new Error('Incorrect password!')
+
+    return staff
 }
 
 staffSchema.pre('save', async function (next) {

@@ -22,7 +22,6 @@ router.get('/admin/branch', adminAuth, async (req, res) => {
 router.get('/admin/staff', adminAuth, async (req, res) => {
     try {
         const staffs = await Staff.find({}).populate('branch').populate('addedBy')
-        console.log(staffs)
         const branches = await Branch.find({})
         res.render('admin/staff', { staffs, branches })
     } catch (e) {

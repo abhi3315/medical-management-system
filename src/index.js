@@ -4,6 +4,7 @@ require('./db/mongoose')
 const cookieParser = require('cookie-parser')
 const hbs = require('hbs')
 const adminRoute = require('./routers/admin')
+const staffRoute = require('./routers/staff')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -30,5 +31,6 @@ app.get('/', (req, res) => {
 })
 
 app.use(adminRoute)
+app.use(staffRoute)
 
 app.listen(port, console.log('Server is running at ' + port))
