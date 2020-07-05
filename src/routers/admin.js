@@ -19,6 +19,16 @@ router.get('/admin/branch', adminAuth, async (req, res) => {
     }
 })
 
+router.get('/admin/staff', adminAuth, async (req, res) => {
+    try {
+        const staffs = await Staff.find({})
+        const branches = await Branch.find({})
+        res.render('admin/staff', { staffs, branches })
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 router.post('/admin/signup', async (req, res) => {
     const admin = new Admin(req.body)
     try {
@@ -62,7 +72,7 @@ router.post('/admin/staff', adminAuth, async (req, res) => {
     })
     try {
         await staff.save()
-        res.status(201).send(staff)
+        res.redirect('/admin/staff')
     } catch (e) {
         res.status(400).send(e)
     }
