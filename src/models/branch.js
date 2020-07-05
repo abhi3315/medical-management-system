@@ -4,7 +4,8 @@ const branchSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
     },
     discount: {
         type: Number,
@@ -14,7 +15,7 @@ const branchSchema = new mongoose.Schema({
                 throw new Error('Discount must be positive!')
         }
     },
-    addedBy:{
+    addedBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Admin'
