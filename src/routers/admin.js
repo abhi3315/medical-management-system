@@ -49,7 +49,7 @@ router.post('/admin/branch', adminAuth, async (req, res) => {
     })
     try {
         await branch.save()
-        res.status(201).send(branch)
+        res.redirect('/admin/branch')
     } catch (e) {
         res.status(400).send(e)
     }

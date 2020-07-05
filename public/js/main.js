@@ -4,5 +4,9 @@ $('.edit').on('click', function () {
     $('#_id').val(branch.data('id'))
     $('#branchName').val(branch.data('name'))
     $('#discount').val(branch.data('discount'))
-    $('#mymodal').modal('toggle')
+    $('#mymodal1').modal('toggle')
+})
+
+$('#new-branch').on('click', function () {
+    $('#mymodal2').modal('toggle')
 })

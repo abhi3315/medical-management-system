@@ -66,7 +66,7 @@
         </table>
     </div>
 
-    <div id="mymodal" class="modal fade">
+    <div id="mymodal1" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -94,6 +94,43 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center;margin-top:50px">
+        <button id="new-branch" type="button" class="btn btn-primary">Add a new branch</button>
+    </div>
+
+    <div id="mymodal2" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Add New Branch</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/admin/branch" method="post">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="branchName2" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" id="branchName2">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="discount2" class="col-sm-2 col-form-label">Discount</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="discount" class="form-control" id="discount2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Branch</button>
                     </div>
                 </form>
             </div>
