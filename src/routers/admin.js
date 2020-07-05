@@ -21,7 +21,8 @@ router.get('/admin/branch', adminAuth, async (req, res) => {
 
 router.get('/admin/staff', adminAuth, async (req, res) => {
     try {
-        const staffs = await Staff.find({})
+        const staffs = await Staff.find({}).populate('branch').populate('addedBy')
+        console.log(staffs)
         const branches = await Branch.find({})
         res.render('admin/staff', { staffs, branches })
     } catch (e) {
@@ -145,12 +146,10 @@ router.post('/admin/branch/delete', adminAuth, async (req, res) => {
     }
 })
 
-router.delete('/admin/staff', adminAuth, async (req, res) => {
+router.post('/admin/staff/delete', adminAuth, async (req, res) => {
     try {
-        const staff = await Staff.findOne({ userName: req.body.userName })
-        if (!staff) return res.status(404).send()
-        await staff.remove()
-        res.send(branch)
+        await Staff.findByIdAndDelete({ _id: req.body._id })
+        res.redirect('/admin/staff')
     } catch (e) {
         res.status(500).send()
     }

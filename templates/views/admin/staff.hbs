@@ -37,6 +37,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Mobile</th>
                     <th scope="col">Branch</th>
+                    <th scope="col">Added By</th>
                     <th scope="col">Delete</th>
                 </tr>
             </thead>
@@ -47,16 +48,10 @@
                     <td>{{this.name}}</td>
                     <td>{{this.email}}</td>
                     <td>{{this.phoneNumber}}</td>
-                    <td>{{this.email}}</td>
+                    <td>{{this.branch.name}}</td>
+                    <td>{{this.addedBy.name}}</td>
                     <td>
-                        <button class="edit" id={{inc @key}} data-name="{{this.name}}" data-id="{{this._id}}"
-                            data-discount="{{this.discount}}"
-                            style="border: none; background:transparent; color:rgb(0, 47, 255);">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <form action="/admin/branch/delete" method="post">
+                        <form action="/admin/staff/delete" method="post">
                             <input type="text" name="_id" value="{{this._id}}" hidden>
                             <button style="border: none; background:transparent; color:red;" type="submit">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
