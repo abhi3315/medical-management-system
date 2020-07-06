@@ -3,6 +3,7 @@ const express = require('express')
 const pdf = require('pdfkit')
 const Staff = require('../models/staff')
 const Patient = require('../models/patient')
+const Admin = require('../models/admin')
 const staffAuth = require('../middleware/staffAuth')
 const router = express.Router()
 
@@ -24,8 +25,24 @@ router.get('/staff/patient', staffAuth, async (req, res) => {
     res.render('staff/patient', { patients, staff: req.staff })
 })
 
+router.get('/staff/changePassword', staffAuth, (req, res) => {
+    res.render('staff/changePassword')
+})
+
 router.get('/staff/download', staffAuth, (req, res) => {
     res.download('bill.pdf')
+})
+
+router.get('/staff/logout', staffAuth, async (req, res) => {
+    try {
+        const staff = await Staff.findById({ _id: req.staff._id })
+        staff.tokens = staff.tokens.filter(token => token.token !== req.token)
+        await staff.save()
+        res.clearCookie("staffAuthorization")
+        res.redirect('/staff')
+    } catch (e) {
+        res.status(500).send()
+    }
 })
 
 router.post('/staff/login', async (req, res) => {
@@ -51,6 +68,17 @@ router.post('/staff/patient', staffAuth, async (req, res) => {
         res.redirect('/staff/patient')
     } catch (e) {
         res.status(400).send(e)
+    }
+})
+
+router.post('/staff/changePassword', staffAuth, async (req, res) => {
+    try {
+        const admin = await Admin.findById({ _id: req.staff.addedBy._id })
+        admin.passwordChangeRequest.push({ requesterId: req.staff._id, newPassword: req.body.password })
+        await Admin.findByIdAndUpdate({ _id: req.staff.addedBy._id }, { passwordChangeRequest: admin.passwordChangeRequest })
+        res.redirect('/staff')
+    } catch (e) {
+        res.status(500).send(e)
     }
 })
 

@@ -68,6 +68,14 @@
             <button id="new-branch" type="button" class="btn btn-primary">Add a new staff</button>
         </div>
 
+        <div style="text-align: center;margin-top:50px; color:white">
+            <a href="/admin/passwordRequest" {{#unless request}} onclick="return false" {{/unless}}
+                class="btn btn-primary">Change
+                Password
+                Request
+                ({{request}})</a>
+        </div>
+
         <div id="mymodal2" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">

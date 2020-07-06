@@ -46,7 +46,8 @@ router.get('/admin/staff', adminAuth, async (req, res) => {
     try {
         const staffs = await Staff.find({}).populate('branch').populate('addedBy')
         const branches = await Branch.find({})
-        res.render('admin/staff', { staffs, branches })
+        const request = req.admin.passwordChangeRequest.length
+        res.render('admin/staff', { staffs, branches, request })
     } catch (e) {
         res.status(500).send()
     }
