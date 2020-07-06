@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="shortcut icon" href="/images/fav.png" type="image/png">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Home | Staff Dashboard</title>
+</head>
+
+<body>
+    {{>staffHeader}}
+
+    <div class="container">
+        <div class="login-cards">
+            <a href="/staff/patient">
+                <div class="login-card">
+                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                    <h3>Patient</h3>
+                </div>
+            </a>
+            <a href="/admin/staff">
+                <div class="login-card">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <h3>Staff</h3>
+                </div>
+            </a>
+            <a href="/admin/doctor">
+                <div class="login-card">
+                    <i class="fa fa-user-md" aria-hidden="true"></i>
+                    <h3>Doctor</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    {{>footer}}
+</body>
+
+</html>
