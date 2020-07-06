@@ -39,6 +39,7 @@
                     <th scope="col">Age</th>
                     <th scope="col">DOB</th>
                     <th scope="col">Added By</th>
+                    <th scope="col">Registration</th>
                     <th scope="col">Billing</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -53,6 +54,7 @@
                     <td>{{this.age}}</td>
                     <td>{{getDate this.dob}}</td>
                     <td>{{this.addedBy.name}}</td>
+                    <td>{{getDate this.registrationDate}}</td>
                     <td>{{this.addedBy.name}}</td>
                     <td>
                         <form action="/staff/patient/delete" method="post">

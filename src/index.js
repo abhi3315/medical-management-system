@@ -26,8 +26,8 @@ app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 hbs.registerHelper("inc", (value, options) => parseInt(value) + 1)
 hbs.registerHelper("getDate", (value, options) => {
-    day = value.getDate().length !== 2 ? '0' + value.getDate() : value.getDate()
-    month = (value.getMonth() + 1).length !== 2 ? '0' + (value.getMonth() + 1) : (value.getMonth() + 1)
+    day = (value.getDate() + '').length !== 2 ? '0' + value.getDate() : value.getDate()
+    month = ((value.getMonth() + 1) + '').length !== 2 ? '0' + (value.getMonth() + 1) : (value.getMonth() + 1)
     year = value.getFullYear()
     return `${day}-${month}-${year}`
 })

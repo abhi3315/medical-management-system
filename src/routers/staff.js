@@ -25,8 +25,10 @@ router.post('/staff/login', async (req, res) => {
 })
 
 router.post('/staff/patient', staffAuth, async (req, res) => {
+    const registrationDate = Date.now()
     const patient = new Patient({
         ...req.body,
+        registrationDate,
         addedBy: req.staff._id
     })
     try {
@@ -34,6 +36,15 @@ router.post('/staff/patient', staffAuth, async (req, res) => {
         res.redirect('/staff/patient')
     } catch (e) {
         res.status(400).send(e)
+    }
+})
+
+router.post('/staff/patient/delete', staffAuth, async (req, res) => {
+    try {
+        await Patient.findByIdAndDelete({ _id: req.body._id })
+        res.redirect('/staff/patient')
+    } catch (e) {
+        res.status(500).send()
     }
 })
 
