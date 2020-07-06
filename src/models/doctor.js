@@ -39,6 +39,12 @@ const doctorSchema = new mongoose.Schema({
                 throw new Error('Provide a valid phone number')
         }
     },
+    tokens: [{
+        token: {
+            type: String,
+            require: true
+        }
+    }],
     branch: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

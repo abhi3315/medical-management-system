@@ -4,7 +4,6 @@ const pdf = require('pdfkit')
 const Staff = require('../models/staff')
 const Patient = require('../models/patient')
 const staffAuth = require('../middleware/staffAuth')
-const { findByIdAndUpdate } = require('../models/staff')
 const router = express.Router()
 
 const bill = new pdf()
