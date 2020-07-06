@@ -8,9 +8,9 @@ const router = express.Router()
 
 router.get('/admin', adminAuth, async (req, res) => {
     try {
-        const branchCount = await Branch.count({})
-        const staffCount = await Staff.count({})
-        const doctorCount = await Doctor.count({})
+        const branchCount = await Branch.countDocuments({})
+        const staffCount = await Staff.countDocuments({})
+        const doctorCount = await Doctor.countDocuments({})
         res.render('admin/home', { branchCount, staffCount, doctorCount })
     } catch (e) {
         res.status(500).send()
@@ -21,9 +21,21 @@ router.get('/admin/signup', (req, res) => {
     res.render('admin/signup')
 })
 
+router.get('/admin/logout', adminAuth, async (req, res) => {
+    try {
+        const admin = await Admin.findById({ _id: req.admin._id })
+        admin.tokens = admin.tokens.filter(token => token.token !== req.token)
+        await admin.save()
+        res.clearCookie("adminAuthorization")
+        res.redirect('/admin')
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 router.get('/admin/branch', adminAuth, async (req, res) => {
     try {
-        const branches = await Branch.find({})
+        const branches = await Branch.find({}).populate('addedBy')
         res.render('admin/branch', { branches })
     } catch (e) {
         res.status(500).send()
@@ -48,6 +60,10 @@ router.get('/admin/doctor', adminAuth, async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
+})
+
+router.get('/admin/changePassword', adminAuth, (req, res) => {
+    res.render('admin/changePassword')
 })
 
 router.post('/admin/signup', async (req, res) => {
@@ -139,21 +155,12 @@ router.patch('/admin/staff', adminAuth, async (req, res) => {
     }
 })
 
-router.patch('/admin/doctor', adminAuth, async (req, res) => {
-    const updates = Object.keys(req.body)
-    const validUpdates = ['name', 'userName', 'email', 'password', 'phoneNumber', 'branch']
-    const isValidUpdate = updates.every(update => validUpdates.includes(update))
-
-    if (!isValidUpdate) return res.status(400).send({ error: "Invalid Update!" })
-
+router.post('/admin/changePassword', adminAuth, async (req, res) => {
     try {
-        const doctor = await Doctor.findOne({ userName: req.body.userName })
-        if (!doctor) return res.status(404).send()
-        updates.forEach(update => doctor[update] = req.body[update])
-        await doctor.save()
-        res.send(doctor)
+        await Admin.findByIdAndUpdate({ _id: req.admin._id }, { password: req.body.password })
+        res.redirect('/admin')
     } catch (e) {
-        res.status(400).send(e)
+        res.status(500).send()
     }
 })
 
