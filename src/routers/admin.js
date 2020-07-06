@@ -29,6 +29,16 @@ router.get('/admin/staff', adminAuth, async (req, res) => {
     }
 })
 
+router.get('/admin/doctor', adminAuth, async (req, res) => {
+    try {
+        const doctors = await Doctor.find({}).populate('branch').populate('addedBy')
+        const branches = await Branch.find({})
+        res.render('admin/doctor', { branches, doctors })
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 router.post('/admin/signup', async (req, res) => {
     const admin = new Admin(req.body)
     try {
