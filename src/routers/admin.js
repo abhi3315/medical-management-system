@@ -6,8 +6,19 @@ const Doctor = require('../models/doctor')
 const adminAuth = require('../middleware/adminAuth')
 const router = express.Router()
 
-router.get('/admin', adminAuth, (req, res) => {
-    res.render('admin/home')
+router.get('/admin', adminAuth, async (req, res) => {
+    try {
+        const branchCount = await Branch.count({})
+        const staffCount = await Staff.count({})
+        const doctorCount = await Doctor.count({})
+        res.render('admin/home', { branchCount, staffCount, doctorCount })
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+router.get('/admin/signup', (req, res) => {
+    res.render('admin/signup')
 })
 
 router.get('/admin/branch', adminAuth, async (req, res) => {
@@ -45,7 +56,7 @@ router.post('/admin/signup', async (req, res) => {
         await admin.save()
         const token = await admin.generateAuthToken()
         res.cookie("adminAuthorization", token)
-        res.status(201).send({ admin, token })
+        res.redirect('/admin')
     } catch (e) {
         res.status(400).send(e)
     }

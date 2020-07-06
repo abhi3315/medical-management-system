@@ -8,7 +8,7 @@
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="shortcut icon" href="/images/fav.png" type="image/png">
     <link rel="stylesheet" href="/css/main.css">
-    <title>Admin Login</title>
+    <title>Admin Signup</title>
 </head>
 
 <body>
@@ -16,13 +16,13 @@
 
     <div class="container">
         <div class="login-form">
-            <form action="/admin/login" method="POST">
-                <h2>Admin Login</h2>
+            <form action="/admin/signup" method="POST">
+                <h2>Admin Signup</h2>
+                <input type="text" placeholder="Name" name="name">
                 <input type="text" placeholder="Email" name="email">
                 <input type="password" placeholder="Password" name="password">
-                <button type="submit">Login Now!</button>
+                <button type="submit">Signup Now!</button>
             </form>
-            <p><a href="/admin/signup">Signup</a> for admin</p>
         </div>
     </div>
 

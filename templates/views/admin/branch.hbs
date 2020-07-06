@@ -16,6 +16,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/portal.css">
     <link rel="shortcut icon" href="/images/fav.png" type="image/png">
     <title>Branch | Admin Dashboard</title>
     <style>
@@ -64,75 +65,75 @@
                 {{/each}}
             </tbody>
         </table>
-    </div>
 
-    <div id="mymodal1" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Change Branch Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <div id="mymodal1" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Change Branch Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/admin/branch/update" method="post">
+                        <div class="modal-body">
+                            <input hidden type="text" name="_id" id="_id">
+                            <div class="form-group row">
+                                <label for="branchName" class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" class="form-control" id="branchName">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="discount" class="col-sm-2 col-form-label">Discount</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="discount" class="form-control" id="discount">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="/admin/branch/update" method="post">
-                    <div class="modal-body">
-                        <input hidden type="text" name="_id" id="_id">
-                        <div class="form-group row">
-                            <label for="branchName" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="branchName">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="discount" class="col-sm-2 col-form-label">Discount</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="discount" class="form-control" id="discount">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
 
-    <div style="text-align: center;margin-top:50px">
-        <button id="new-branch" type="button" class="btn btn-primary">Add a new branch</button>
-    </div>
+        <div style="text-align: center;margin-top:50px">
+            <button id="new-branch" type="button" class="btn btn-primary">Add a new branch</button>
+        </div>
 
-    <div id="mymodal2" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Add New Branch</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <div id="mymodal2" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Add New Branch</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/admin/branch" method="post">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label for="branchName2" class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" class="form-control" id="branchName2">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="discount2" class="col-sm-2 col-form-label">Discount</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="discount" class="form-control" id="discount2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add Branch</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="/admin/branch" method="post">
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <label for="branchName2" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="branchName2">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="discount2" class="col-sm-2 col-form-label">Discount</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="discount" class="form-control" id="discount2">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add Branch</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

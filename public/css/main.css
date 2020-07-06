@@ -61,7 +61,7 @@ a {
 
 .login-form {
     width: 400px;
-    height: 350px;
+    min-height: 350px;
     background: rgba(0, 0, 0, 0.5);
     position: relative;
     left: 50%;
@@ -118,6 +118,58 @@ a {
 .login-form form button:hover {
     background: blueviolet;
     color: white;
+}
+
+.login-form p {
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+
+.login-form p a {
+    color: rgb(84, 84, 247);
+}
+
+.header {
+    height: 70px;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    color: white;
+    padding: 20px 30px;
+}
+
+.header h2 {
+    float: left;
+}
+
+.header ul {
+    float: right;
+}
+
+.header a {
+    text-decoration: none;
+    color: white;
+}
+
+.header ul li {
+    margin-left: 20px;
+    margin-top: 6px;
+    list-style: none;
+    display: inline-block;
+}
+
+.footer {
+    height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.footer a {
+    color: rgb(84, 84, 247);
 }
 
 @media only screen and (max-width: 750px) {
