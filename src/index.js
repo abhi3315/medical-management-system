@@ -31,6 +31,7 @@ hbs.registerHelper("getDate", (value, options) => {
     year = value.getFullYear()
     return `${day}-${month}-${year}`
 })
+hbs.registerHelper("json", (value, options) => JSON.stringify(value))
 
 //routes setup
 app.get('/', (req, res) => {

@@ -7,6 +7,14 @@ $('.edit').on('click', function () {
     $('#mymodal1').modal('toggle')
 })
 
+$('.print').on('click', function () {
+    const id = this.id
+    const patient = $('#' + id).data('patient')
+    $('#_id').val(patient._id)
+    $('#description').val(patient.patientInfo)
+    $('#mymodal3').modal('toggle')
+})
+
 $('#new-branch').on('click', function () {
     $('#mymodal2').modal('toggle')
 })

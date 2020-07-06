@@ -55,7 +55,12 @@
                     <td>{{getDate this.dob}}</td>
                     <td>{{this.addedBy.name}}</td>
                     <td>{{getDate this.registrationDate}}</td>
-                    <td>{{this.addedBy.name}}</td>
+                    <td>
+                        <button class="print" id={{inc @key}} data-patient="{{json this}}"
+                            style="border: none; background:transparent; color:rgb(0, 47, 255);">
+                            <i class="fa fa-print" aria-hidden="true"></i>
+                        </button>
+                    </td>
                     <td>
                         <form action="/staff/patient/delete" method="post">
                             <input type="text" name="_id" value="{{this._id}}" hidden>
@@ -68,9 +73,12 @@
                 {{/each}}
             </tbody>
         </table>
+        <div style="text-align: center;margin-top:50px">
+            <button id="new-branch" type="button" class="btn btn-primary">Add a new patient</button>
+        </div>
     </div>
 
-    <div id="mymodal1" class="modal fade">
+    <div id="mymodal3" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -79,33 +87,29 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/admin/branch/update" method="post">
+                <form action="/staff/patient/bill" method="post">
                     <div class="modal-body">
                         <input hidden type="text" name="_id" id="_id">
                         <div class="form-group row">
-                            <label for="branchName" class="col-sm-2 col-form-label">Name</label>
+                            <label for="description" class="col-sm-2 col-form-label">Patient Info</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="branchName">
+                                <textarea name="patientInfo" class="form-control" id="description"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="discount" class="col-sm-2 col-form-label">Discount</label>
+                            <label for="discount" class="col-sm-2 col-form-label">Bill</label>
                             <div class="col-sm-10">
-                                <input type="text" name="discount" class="form-control" id="discount">
+                                <input type="text" name="bill" class="form-control" id="discount">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Download Bill</button>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-
-    <div style="text-align: center;margin-top:50px">
-        <button id="new-branch" type="button" class="btn btn-primary">Add a new patient</button>
     </div>
 
     <div id="mymodal2" class="modal fade">
