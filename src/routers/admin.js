@@ -164,4 +164,13 @@ router.post('/admin/staff/delete', adminAuth, async (req, res) => {
     }
 })
 
+router.post('/admin/doctor/delete', adminAuth, async (req, res) => {
+    try {
+        await Doctor.findByIdAndDelete({ _id: req.body._id })
+        res.redirect('/admin/doctor')
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 module.exports = router

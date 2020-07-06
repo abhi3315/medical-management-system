@@ -42,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each staffs}}
+                {{#each doctors}}
                 <tr>
                     <td scope="col">{{inc @key}}</td>
                     <td>{{this.name}}</td>
@@ -51,7 +51,7 @@
                     <td>{{this.branch.name}}</td>
                     <td>{{this.addedBy.name}}</td>
                     <td>
-                        <form action="/admin/staff/delete" method="post">
+                        <form action="/admin/doctor/delete" method="post">
                             <input type="text" name="_id" value="{{this._id}}" hidden>
                             <button style="border: none; background:transparent; color:red;" type="submit">
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
