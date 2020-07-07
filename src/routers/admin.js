@@ -67,6 +67,15 @@ router.get('/admin/changePassword', adminAuth, (req, res) => {
     res.render('admin/changePassword')
 })
 
+router.get('/admin/passwordRequest', adminAuth, async (req, res) => {
+    try {
+        const admin = await Admin.findById({ _id: req.admin._id }).populate('passwordChangeRequest.requesterId')
+        res.render('admin/passwordReq', { req: admin.passwordChangeRequest })
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 router.post('/admin/signup', async (req, res) => {
     const admin = new Admin(req.body)
     try {
@@ -123,7 +132,7 @@ router.post('/admin/doctor', adminAuth, async (req, res) => {
     })
     try {
         await doctor.save()
-        res.status(201).send(doctor)
+        res.redirect('/admin/doctor')
     } catch (e) {
         res.status(400).send(e)
     }
@@ -138,30 +147,29 @@ router.post('/admin/branch/update', adminAuth, async (req, res) => {
     }
 })
 
-router.patch('/admin/staff', adminAuth, async (req, res) => {
-    const updates = Object.keys(req.body)
-    const validUpdates = ['name', 'userName', 'email', 'password', 'phoneNumber', 'branch']
-    const isValidUpdate = updates.every(update => validUpdates.includes(update))
-
-    if (!isValidUpdate) return res.status(400).send({ error: "Invalid Update!" })
+router.post('/admin/confirm', adminAuth, async (req, res) => {
 
     try {
-        const staff = await Staff.findOne({ userName: req.body.userName })
-        if (!staff) return res.status(404).send()
-        updates.forEach(update => staff[update] = req.body[update])
+        const staff = await Staff.findById({ _id: req.body._id })
+        staff.password = req.body.password
         await staff.save()
-        res.send(staff)
+        const admin = await Admin.findById({ _id: req.admin._id })
+        admin.passwordChangeRequest = admin.passwordChangeRequest.filter(request => request.requesterId === req.body._id)
+        await admin.save()
+        res.redirect('/admin/staff')
     } catch (e) {
-        res.status(400).send(e)
+        res.status(400).send()
     }
 })
 
 router.post('/admin/changePassword', adminAuth, async (req, res) => {
     try {
-        await Admin.findByIdAndUpdate({ _id: req.admin._id }, { password: req.body.password })
+        const admin = await Admin.findById({ _id: req.admin._id })
+        admin.password = req.body.password
+        await admin.save()
         res.redirect('/admin')
     } catch (e) {
-        res.status(500).send()
+        res.status(500).send(e)
     }
 })
 
