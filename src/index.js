@@ -43,4 +43,8 @@ app.use(adminRoute)
 app.use(staffRoute)
 app.use(doctorRoute)
 
+app.get('*', (req, res) => {
+    res.send({ error: 404 })
+})
+
 app.listen(port, console.log('Server is running at ' + port))
